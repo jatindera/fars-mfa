@@ -30,7 +30,8 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 @app.get("/dummyList")
-def get_dummy_list() -> List:
+def get_dummy_list(is_valid_token: dict=Depends(validate_token)) -> List:
+    print("1111111111",is_valid_token)
     dummy_d = [
         {
         "id": "1",
@@ -69,4 +70,7 @@ def get_dummy_list() -> List:
         "workLocation" : "US"
         }
     ]
-    return dummy_d
+    if(is_valid_token):
+        return dummy_d
+    else:
+        return ""

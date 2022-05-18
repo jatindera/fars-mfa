@@ -21,7 +21,7 @@ security = HTTPBearer()
 
 async def validate_token(credentials: HTTPBasicCredentials = Depends(security)):
     token = credentials.credentials
-    print("===========Token==============")
+    print("===========Token==============", token)
     try:
         payload = jwt.decode(token, key='secret', options={"verify_signature": False,
                                                            "verify_aud": False,

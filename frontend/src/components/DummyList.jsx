@@ -1,18 +1,36 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Card, Container, Row, Col } from "react-bootstrap";
+import { useMsal } from "@azure/msal-react";
+import {getAccessToken} from "../utils/helperFunctions.js";
+
 
 
 const DummyList = () => {
+
+
     const [dummyList, setDummyList] = useState([])
+    const { instance, inProgress, accounts } = useMsal();
+
+
 
     useEffect(() => {
-        axios.get("http://localhost:8000/dummyList")
+
+        const fetchData = async () => {
+            const accessToken = await getAccessToken(instance, inProgress, accounts)
+            const config = {
+                headers: { Authorization: `Bearer ${accessToken}` }
+            };
+            // console.log(config)
+            axios.get("http://localhost:8000/dummyList", config)
             .then(res => {
                 setDummyList(res.data)
+                console.log(res.data)
             })
+        }
 
-    }, [])
+        fetchData()
+    }, [instance, inProgress, accounts])
 
 
     return (
