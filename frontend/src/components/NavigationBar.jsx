@@ -29,8 +29,8 @@ export const NavigationBar = () => {
                         <Nav className="me-auto">
                             <Nav.Link href="/">Home</Nav.Link>
                             <AuthenticatedTemplate>
-                                <Nav.Link href="/fastapi">FastAPI</Nav.Link>
-                                <Nav.Link href="/processFile">Process File</Nav.Link>
+                                <Nav.Link href="/posts">List Posts</Nav.Link>
+                                <Nav.Link href="/post/create">Create Post</Nav.Link>
                             </AuthenticatedTemplate>
                             <Nav.Link href="/aboutUs">About Us</Nav.Link>
                         </Nav>

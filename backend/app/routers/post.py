@@ -1,37 +1,33 @@
-from array import array
-from typing import List, Union
-from fastapi import FastAPI, Depends
-from auth import validate_token
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import FastAPI, Response, status, HTTPException, Depends, APIRouter
+from sqlalchemy.orm import Session
+from typing import List, Optional
+from ..db import get_db
+from sqlalchemy import func, text
+from sqlalchemy.sql.functions import func
+from .. import models, schemas
 
-app = FastAPI()
+from app.routers.auth import validate_token
 
-origins = [
-    "http://localhost:3000",
-    "localhost:3000"
-]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"]
+router = APIRouter(
+    prefix="/posts",
+    tags=['Posts']
 )
 
+# @router.get('/', response_model=schemas.PostOut)
+@router.get('/',)
+def getPost(db: Session = Depends(get_db), is_valid_token: dict=Depends(validate_token)):
+    posts = db.query(models.Post).all()
+    if not posts:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f"No post found")
 
-@app.post("/")
-def read_root(is_valid_token: dict=Depends(validate_token)) -> dict:
-    return is_valid_token
+    return posts
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-
-@app.get("/dummyList")
+@router.get("/dummyList")
 def get_dummy_list(is_valid_token: dict=Depends(validate_token)) -> List:
-    print("1111111111",is_valid_token)
+    print(is_valid_token)
     dummy_d = [
         {
         "id": "1",

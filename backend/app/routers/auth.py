@@ -5,8 +5,13 @@ from jose.exceptions import JOSEError
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
-from fastapi import HTTPException, Depends
+from fastapi import HTTPException, Depends, APIRouter
 from fastapi.security import HTTPBasicCredentials, HTTPBearer
+
+router = APIRouter(
+    prefix="/auth",
+    tags=['Auth']
+)
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -21,14 +26,14 @@ security = HTTPBearer()
 
 async def validate_token(credentials: HTTPBasicCredentials = Depends(security)):
     token = credentials.credentials
-    print("===========Token==============", token)
+    # print("===========Token==============", token)
     try:
         payload = jwt.decode(token, key='secret', options={"verify_signature": False,
                                                            "verify_aud": False,
                                                            "verify_iss": False})
-        # print("payload => ", payload["iss"])
+        print("payload => ", payload["iss"])
         # print(payload)
-        print(contains(payload["iss"], tenant_id))
+        # print(contains(payload["iss"], tenant_id))
 
         if(contains(payload["iss"], tenant_id) and (client_id==payload["appid"])):
             return {"is_valid_token": "true"}

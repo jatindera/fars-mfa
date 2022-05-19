@@ -22,7 +22,7 @@ const DummyList = () => {
                 headers: { Authorization: `Bearer ${accessToken}` }
             };
             // console.log(config)
-            axios.get("http://localhost:8000/dummyList", config)
+            axios.get("http://localhost:8000/posts", config)
             .then(res => {
                 setDummyList(res.data)
                 console.log(res.data)
@@ -48,11 +48,11 @@ const DummyList = () => {
                                         style={{ width: '18rem' }}
                                         className="mb-2"
                                     >
-                                        <Card.Header>{item.team}</Card.Header>
+                                        <Card.Header>Spark Digital - Tech Stack</Card.Header>
                                         <Card.Body>
-                                            <Card.Title>{item.name}</Card.Title>
+                                            <Card.Title>{item.title}</Card.Title>
                                             <Card.Text>
-                                                {item.name} work from <b>{item.workLocation}</b> location
+                                                {item.content}
                                             </Card.Text>
                                         </Card.Body>
                                     </Card>

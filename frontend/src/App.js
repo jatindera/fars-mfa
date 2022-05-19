@@ -3,8 +3,8 @@ import { NavigationBar } from "./components/NavigationBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import AboutUs from "./Pages/AboutUs";
-import ProcessFile from "./Pages/ProcessFile";
-import FastAPI from "./Pages/FastAPI";
+import CreatePost from "./Pages/CreatePost";
+import Posts from "./Pages/Posts";
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/aboutUs" element={<AboutUs/>} />
-        <Route path="/fastAPI" element={<FastAPI/>} />
-        <Route path="/processFile" element={<ProcessFile/>} />
+        <Route path="/posts" element={<Posts/>} />
+        <Route path="/posts/create" element={<CreatePost/>} />
       </Routes>
     </BrowserRouter>
   );

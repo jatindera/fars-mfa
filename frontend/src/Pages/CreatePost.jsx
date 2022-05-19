@@ -1,6 +1,6 @@
 import { AuthenticatedTemplate } from "@azure/msal-react"
 
-const ProcessFile = () => {
+const CreatePost = () => {
     return (
         <>
             <AuthenticatedTemplate>
@@ -10,4 +10,4 @@ const ProcessFile = () => {
     )
 }
 
-export default ProcessFile
+export default CreatePost
